@@ -1,0 +1,51 @@
+daemon off;
+worker_processes <%= ENV['NGINX_WORKERS'] || 'auto' %>;
+
+events {
+    use epoll;
+    accept_mutex on;
+    worker_connections <%= ENV['NGINX_WORKER_CONNECTIONS'] || 1024 %>;
+}
+
+http {
+    include mime.types;
+    default_type application/octet-stream;
+
+    log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+    access_log <%= ENV['NGINX_ACCESS_LOG_PATH'] || '/dev/stdout' %> l2met;
+    error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || '/dev/stderr' %>;
+
+    sendfile on;
+    keepalive_timeout 65;
+    gzip on;
+
+    server {
+        listen <%= ENV["PORT"] %>;
+        server_name 10ax.eskihub.com;
+
+        location / {
+            proxy_pass https://10ax.online.tableau.com/;
+            proxy_ssl_name '10ax.online.tableau.com';
+            proxy_set_header x-forwarded-host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+            proxy_set_header Host '10ax.online.tableau.com';
+            proxy_cookie_domain '10ax.online.tableau.com' 'eskihub.com';
+        }
+    }
+
+    server {
+        listen <%= ENV["PORT"] %>;
+        server_name dub01.eskihub.com;
+
+        location / {
+            proxy_pass https://dub01.online.tableau.com/;
+            proxy_ssl_name 'dub01.online.tableau.com';
+            proxy_set_header x-forwarded-host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+            proxy_set_header Host 'dub01.online.tableau.com';
+            proxy_cookie_domain 'dub01.online.tableau.com' 'eskihub.com';
+        }
+    }
+}
