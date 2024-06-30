@@ -34,9 +34,8 @@ The Nginx configuration supports two subdomains (add more as needed):
 
 ## Files
 
-
-`Procfile`: Defines the command to start Nginx on Heroku.
-`config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods.
+- `Procfile`: Defines the command to start Nginx on Heroku.
+- `config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods.
 
  ## Steps to Setup using the Heroku CLI
 
