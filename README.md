@@ -1,5 +1,5 @@
 # Nginx Reverse Proxy for Tableau Cloud on Heroku
-# Only works with Tableau Embedded Analytics and Connected Apps (jwt) authentication
+* Works with Tableau Embedded Analytics and Connected Apps (jwt) authentication
 
 This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers. It's configured to proxy requests for 10ax.eskihub.com and dub01.eskihub.com to their respective Tableau Online instances.
 
