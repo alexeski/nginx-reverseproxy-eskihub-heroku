@@ -23,9 +23,7 @@ Ensure your Nginx configuration includes the following line to share cookies acr
 
 The Tableau embedded visualization URL should follow this format:
 
-- `https://10ax.{your-domain}/t/{site-name}/views/{workbook-name}/{view-name}`
-
-
+- `https://{tableau-pod}.{your-domain}/t/{site-name}/views/{workbook-name}/{view-name}`
 
 ## Configuration
 
