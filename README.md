@@ -37,41 +37,54 @@ The Nginx configuration supports two subdomains (add more as needed):
 - `Procfile`: Defines the command to start Nginx on Heroku.
 - `config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods.
 
-# Steps to Setup using the Heroku CLI
+## Steps to Setup using the Heroku CLI
 
-## Clone the Repository:
+1. Clone the Repository:
 
+```bash
 git clone https://github.com/alexeski/nginx-reverseproxy-eskihub-heroku.git
 cd nginx-reverseproxy-eskihub-heroku
+```
 
-## Create a New Heroku App:
+2. Create a New Heroku App:
 
+```bash
 heroku create your-app-name
+```
 
-## Add the Nginx buildpack to your Heroku app:
+3. Add the Nginx buildpack to your Heroku app:
 
+```bash
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nginx -a your-app-name
+```
 
-## Add your custom domains to the Heroku app:
+4. Add your custom domains to the Heroku app:
 
 Example with the Heroku CLI:
+```bash
 heroku domains:add 10ax.{your-domain} -a your-app-name
 heroku domains:add dub01.{your-domain} -a your-app-name
+```
+5. Set the Necessary Environment Variable:
 
-## Set the Necessary Environment Variable:
+```bash
+heroku config:set NGINX_APP_ENABLE=true -a your-app-name
+```
 
-NGINX_APP_ENABLE=true
+6. Deploy the App to Heroku:
 
-## Deploy the App to Heroku:
-
+```bash
 git push heroku main
+```
 
-## Update Your DNS Settings to Point Your Subdomains to the Heroku App's DNS Target:
-Find the DNS target using:
+7. Update Your DNS Settings to Point Your Subdomains to the Heroku App's DNS Target. Find the DNS target using:
+```bash
 heroku domains -a your-app-name
-
-## Enable SSL for your custom domains:
+```
+8. Enable SSL for your custom domains:
+```bash
 heroku certs:auto:enable -a your-app-name
+```
 
 # Additional Information
 
