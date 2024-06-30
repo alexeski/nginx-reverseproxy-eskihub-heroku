@@ -2,13 +2,16 @@
 
 **Note**: This setup only works with Tableau Embedded Analytics and Connected Apps (JWT) authentication. It is not compatible with SAML, OIDC, or any other authentication methods, nor does it work for direct access to the Tableau Cloud portal interface.
 
+# Streamlining Tableau Embeddings with a Reverse Proxy
+
+There's a good reason to host your Tableau visualizations (embedded content) on the same web address (domain) as your main website (parent portal). This ensures that cookies created by Tableau are recognized as coming from your own site (first-party cookies). This approach makes everything work smoothly across different web browsers and apps, including Apple's Safari browser and apps on iPhones and iPads.
+
+By using a reverse proxy, you can achieve this domain alignment even if Tableau Server or Tableau Cloud resides on a separate system behind the scenes. The reverse proxy acts as an intermediary, forwarding requests from users to Tableau Server/Cloud and delivering the response back. This way, browsers see all interactions as happening on your main website's domain, eliminating concerns about third-party cookie blocking.
+
 ## Project Overview
 
 This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers, specifically for embedded analytics and Connected Apps authentication. The configuration proxies requests for `10ax.eskihub.com` and `dub01.eskihub.com` to their respective Tableau Online instances. Replace `eskihub.com` with your own domain (e.g., `myamazingportal.com`).
 
-# Why use a Reverse Proxy for Tableau Embedded
-
-Your Tableau embedded content should reside on the same domain as the parent portal to ensure all Tableau cookies are treated as first-party by browsers. This approach allows smooth functionality across all web browsers and apps, including iOS Safari and iOS apps.
 
 **Example:**
 - **Your Portal:** `myamazingportal.com`
