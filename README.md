@@ -9,7 +9,7 @@ Notice this line in the config file which ensures ookies will be shared across a
 proxy_cookie_domain '10ax.online.tableau.com' 'eskihub.com';
 
 Tableau Embedded viz url should have the following format:
-https://10ax.eskihub.com/t/<site-name>/views/<workbook-name>/<view-name>
+https://10ax.eskihub.com/t/{site-name}/views/{workbook-name}/{view-name}
 
 ## Configuration
 
