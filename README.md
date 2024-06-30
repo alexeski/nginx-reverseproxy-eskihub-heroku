@@ -1,19 +1,29 @@
 # Nginx Reverse Proxy for Tableau Cloud on Heroku
-* Works with Tableau Embedded Analytics and Connected Apps (jwt) authentication
 
-This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers. It's configured to proxy requests for 10ax.eskihub.com and dub01.eskihub.com to their respective Tableau Online instances.
+**Note**: This setup only works with Tableau Embedded Analytics and Connected Apps (JWT) authentication. It is not compatible with SAML, OIDC, or any other authentication methods, nor does it work for direct access to the Tableau Cloud portal interface.
 
-Notice I'm using my domain eskihub.com as an example, feel free to replace to your own.
+## Project Overview
 
-Notice this line in the config file which ensures ookies will be shared across all subdomains of eskihub.com: 
+This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers, specifically for embedded analytics and Connected Apps authentication. The configuration proxies requests for `10ax.eskihub.com` and `dub01.eskihub.com` to their respective Tableau Online instances. Replace `eskihub.com` with your own domain (e.g., `myamazingportal.com`).
+
+Your Tableau embedded content should reside on the same domain as the parent portal to ensure all Tableau cookies are treated as first-party by browsers. This approach allows smooth functionality across all web browsers and apps, including iOS Safari and iOS apps.
+
+**Example:**
+- **Your Portal:** `myamazingportal.com`
+- **Tableau Embedded Visualizations:** `analytics.myamazingportal.com`
+
+Ensure your Nginx configuration includes the following line to share cookies across all subdomains:
+```nginx
 proxy_cookie_domain '10ax.online.tableau.com' 'eskihub.com';
 
-Tableau Embedded viz url should have the following format:
-https://10ax.eskihub.com/t/{site-name}/views/{workbook-name}/{view-name}
+The Tableau embedded visualization URL should follow this format:
+https://10ax.{your-domain}/t/{site-name}/views/{workbook-name}/{view-name}
+
+
 
 ## Configuration
 
-The Nginx configuration supports two subdomains:
+The Nginx configuration supports two subdomains (add more as needed):
 
 - 10ax.eskihub.com -> 10ax.online.tableau.com
 - dub01.eskihub.com -> dub01.online.tableau.com
@@ -21,24 +31,44 @@ The Nginx configuration supports two subdomains:
 ## Files
 
 - `Procfile`: Defines the command to start Nginx on Heroku.
-- `config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods, add others as needed.
+- `config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods.
 
-# Add the Nginx buildpack to your Heroku app:
+# Steps to Setup using the Heroku CLI
+
+## Clone the Repository:
+
+git clone https://github.com/alexeski/nginx-reverseproxy-eskihub-heroku.git
+cd nginx-reverseproxy-eskihub-heroku
+
+## Create a New Heroku App:
+
+heroku create your-app-name
+
+## Add the Nginx buildpack to your Heroku app:
 
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nginx -a your-app-name
 
-# Add your custom domains to the Heroku app:
+## Add your custom domains to the Heroku app:
 
 Example with the Heroku CLI:
-heroku domains:add 10ax.eskihub.com -a your-app-name
-heroku domains:add dub01.eskihub.com -a your-app-name
+heroku domains:add 10ax.{your-domain} -a your-app-name
+heroku domains:add dub01.{your-domain} -a your-app-name
 
-# Environment variables:
+## Set the Necessary Environment Variable:
 
 NGINX_APP_ENABLE=true
 
-# Update your DNS settings to point your subdomains to the Heroku app's DNS target. You can find the DNS target with (CLI):
-heroku domains
+## Deploy the App to Heroku:
 
-# Enable SSL for your custom domains:
-heroku certs:auto:enable
+git push heroku main
+
+## Update Your DNS Settings to Point Your Subdomains to the Heroku App's DNS Target:
+Find the DNS target using:
+heroku domains -a your-app-name
+
+## Enable SSL for your custom domains:
+heroku certs:auto:enable -a your-app-name
+
+# Additional Information
+
+Make sure to replace all instances of eskihub.com with your own domain, e.g., myamazingportal.com. This will ensure that all configurations are correctly set up for your domain.
