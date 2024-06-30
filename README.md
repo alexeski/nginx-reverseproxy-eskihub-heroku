@@ -18,7 +18,7 @@ This project sets up an Nginx reverse proxy on Heroku to handle multiple subdoma
 - **Tableau Embedded Visualizations:** `analytics.myamazingportal.com`
 
 Ensure your Nginx configuration includes the following line to share cookies across all subdomains:
-```nginx
+
 proxy_cookie_domain '10ax.online.tableau.com' 'eskihub.com';
 
 The Tableau embedded visualization URL should follow this format:
