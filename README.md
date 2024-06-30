@@ -3,9 +3,13 @@
 
 This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers. It's configured to proxy requests for 10ax.eskihub.com and dub01.eskihub.com to their respective Tableau Online instances.
 
+Notice I'm using my domain eskihub.com as an example, feel free to replace to your own.
+
 Notice this line in the config file which ensures ookies will be shared across all subdomains of eskihub.com: 
 proxy_cookie_domain '10ax.online.tableau.com' 'eskihub.com';
 
+Tableau Embedded viz url should have the following format:
+https://10ax.eskihub.com/t/<site-name>/views/<workbook-name>/<view-name>
 
 ## Configuration
 
