@@ -1,1 +1,1 @@
-web: nginx -c /app/config/nginx.conf
+web: bin/start-nginx-solo
