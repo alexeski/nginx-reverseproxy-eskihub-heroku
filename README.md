@@ -1,6 +1,6 @@
 # Nginx Reverse Proxy for Tableau Cloud on Heroku
 
-**Note**: This setup only works with Tableau Embedded Analytics and Connected Apps (JWT) authentication. It is not compatible with SAML, OIDC, or any other authentication methods, nor does it work for direct access to the Tableau Cloud portal interface.
+**Note**: This setup only works with Tableau Embedded Analytics and Connected Apps (JWT) authentication. It is not compatible with SAML, OIDC, or any other authentication methods, nor does it work for direct access to the Tableau Cloud portal interface. These limitations apply only to Tableau Cloud; Tableau Server supports all authentication methods and access types.
 
 # Streamlining Tableau Embeddings with a Reverse Proxy
 
@@ -34,10 +34,11 @@ The Nginx configuration supports two subdomains (add more as needed):
 
 ## Files
 
-- `Procfile`: Defines the command to start Nginx on Heroku.
-- `config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods.
 
-## Steps to Setup using the Heroku CLI
+`Procfile`: Defines the command to start Nginx on Heroku.
+`config/nginx.conf.erb`: The Nginx configuration file with reverse proxy set for a few Tableau Cloud pods.
+
+ ## Steps to Setup using the Heroku CLI
 
 1. Clone the Repository:
 
