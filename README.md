@@ -6,7 +6,7 @@
 
 This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers, specifically for embedded analytics and Connected Apps authentication. The configuration proxies requests for `10ax.eskihub.com` and `dub01.eskihub.com` to their respective Tableau Online instances. Replace `eskihub.com` with your own domain (e.g., `myamazingportal.com`).
 
-# Why do you need to Reverse Proxy all Tableau Embedded traffic
+# Why we should use a Reverse Proxy for Tableau Embedded
 
 Your Tableau embedded content should reside on the same domain as the parent portal to ensure all Tableau cookies are treated as first-party by browsers. This approach allows smooth functionality across all web browsers and apps, including iOS Safari and iOS apps.
 
