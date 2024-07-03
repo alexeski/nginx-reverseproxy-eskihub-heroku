@@ -17,7 +17,7 @@ http {
 
     sendfile on;                 # Enables the use of sendfile for serving static files, improving performance by avoiding the overhead of the kernel passing data between user space and the kernel.
     keepalive_timeout 20s;       # Specifies the timeout for keep-alive connections with the client. If the client does not send a new request within 65 seconds, the server closes the connection.
-    keepalive_requests 100;      # Limits the number of requests that can be sent over a single keep-alive connection. After 100 requests, the connection will be closed.
+    keepalive_requests 30;      # Limits the number of requests that can be sent over a single keep-alive connection. After 100 requests, the connection will be closed.
     gzip on;                     # Enables gzip compression for responses, which can reduce the size of the response and improve load times for clients.
 
     proxy_connect_timeout 25s;   # Sets the timeout for establishing a connection to the proxied server. If the connection cannot be established within 60 seconds, the request fails.
