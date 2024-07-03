@@ -16,14 +16,14 @@ http {
     error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || '/dev/stderr' %>;
 
     sendfile on;                 # Enables the use of sendfile for serving static files, improving performance by avoiding the overhead of the kernel passing data between user space and the kernel.
-    keepalive_timeout 65s;       # Specifies the timeout for keep-alive connections with the client. If the client does not send a new request within 65 seconds, the server closes the connection.
+    keepalive_timeout 20s;       # Specifies the timeout for keep-alive connections with the client. If the client does not send a new request within 65 seconds, the server closes the connection.
     keepalive_requests 100;      # Limits the number of requests that can be sent over a single keep-alive connection. After 100 requests, the connection will be closed.
     gzip on;                     # Enables gzip compression for responses, which can reduce the size of the response and improve load times for clients.
 
-    proxy_connect_timeout 60s;   # Sets the timeout for establishing a connection to the proxied server. If the connection cannot be established within 60 seconds, the request fails.
-    proxy_send_timeout 60s;      # Specifies the timeout for sending data to the proxied server. If the server does not receive data within 60 seconds, the connection is closed.
-    proxy_read_timeout 60s;      # Sets the timeout for reading data from the proxied server. If no data is received within 60 seconds, the connection is closed.
-    send_timeout 60s;            # Defines the timeout for transmitting a response to the client. If the client does not receive the entire response within 60 seconds, the connection is closed.
+    proxy_connect_timeout 25s;   # Sets the timeout for establishing a connection to the proxied server. If the connection cannot be established within 60 seconds, the request fails.
+    proxy_send_timeout 25s;      # Specifies the timeout for sending data to the proxied server. If the server does not receive data within 60 seconds, the connection is closed.
+    proxy_read_timeout 25s;      # Sets the timeout for reading data from the proxied server. If no data is received within 60 seconds, the connection is closed.
+    send_timeout 25s;            # Defines the timeout for transmitting a response to the client. If the client does not receive the entire response within 60 seconds, the connection is closed.
 
 
     server {
