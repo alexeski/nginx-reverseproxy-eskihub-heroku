@@ -10,12 +10,12 @@ By using a reverse proxy, you can achieve this domain alignment even if Tableau 
 
 ## Project Overview
 
-This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers, specifically for embedded analytics and Connected Apps authentication. The configuration proxies requests for `10ax.eskihub.com` and `dub01.eskihub.com` to their respective Tableau Online instances. Replace `eskihub.com` with your own domain (e.g., `myamazingportal.com`).
+This project sets up an Nginx reverse proxy on Heroku to handle multiple subdomains for Tableau Online servers, specifically for embedded analytics and Connected Apps authentication. The configuration proxies requests for `10ax.eskihub.com` and `dub01.eskihub.com` to their respective Tableau Online instances. Replace `eskihub.com` with your own domain.
 
 
 **Example:**
-- **Your Portal:** `myamazingportal.com`
-- **Tableau Embedded Visualizations:** `analytics.myamazingportal.com`
+- **Your Portal:** `eskihub.com`
+- **Tableau Embedded Visualizations:** `analytics.eskihub.com`
 
 Ensure your Nginx configuration includes the following line to share cookies across all subdomains:
 
@@ -88,4 +88,4 @@ heroku certs:auto:enable -a your-app-name
 
 # Additional Information
 
-Make sure to replace all instances of eskihub.com with your own domain, e.g., myamazingportal.com. This will ensure that all configurations are correctly set up for your domain.
+Make sure to replace all instances of eskihub.com with your own domain. This will ensure that all configurations are correctly set up for your domain.
