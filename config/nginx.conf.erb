@@ -32,6 +32,9 @@ http {
         "~^https?://([a-z0-9-]+\.eskihub\.com)$" $http_origin;  # Allow any subdomain of eskihub.com
     }
 
+    # Define a variable for the Content Security Policy
+    set $csp "default-src 'self'; img-src 'self' https://*.eskihub.com; media-src 'self' https://*.eskihub.com; frame-src 'self' https://*.eskihub.com; script-src 'self' https://*.eskihub.com; style-src 'self' https://*.eskihub.com;";
+
     server {
         listen <%= ENV["PORT"] %>;
         server_name 10ax.eskihub.com;
@@ -48,9 +51,10 @@ http {
                 add_header 'Access-Control-Allow-Credentials' 'true';  # Allow credentials
                 add_header 'Content-Type' 'text/plain; charset=utf-8';
                 add_header 'Content-Length' 0;
-                return 204;
+                return 204;  # No content response
             }
 
+            # Proxy settings
             proxy_pass https://10ax.online.tableau.com/;
             proxy_ssl_name '10ax.online.tableau.com';
             proxy_set_header x-forwarded-host $host;
@@ -59,6 +63,9 @@ http {
             proxy_set_header Host '10ax.online.tableau.com';
             proxy_set_header X-Forwarded-For $remote_addr;
             proxy_cookie_domain '10ax.online.tableau.com' '10ax.eskihub.com';
+
+            # Content Security Policy
+            add_header Content-Security-Policy $csp always;
         }
     }
 
@@ -78,9 +85,10 @@ http {
                 add_header 'Access-Control-Allow-Credentials' 'true';  # Allow credentials
                 add_header 'Content-Type' 'text/plain; charset=utf-8';
                 add_header 'Content-Length' 0;
-                return 204;
+                return 204;  # No content response
             }
 
+            # Proxy settings
             proxy_pass https://dub01.online.tableau.com/;
             proxy_ssl_name 'dub01.online.tableau.com';
             proxy_set_header x-forwarded-host $host;
@@ -89,6 +97,9 @@ http {
             proxy_set_header Host 'dub01.online.tableau.com';
             proxy_set_header X-Forwarded-For $remote_addr;
             proxy_cookie_domain 'dub01.online.tableau.com' 'dub01.eskihub.com';
+
+            # Content Security Policy
+            add_header Content-Security-Policy $csp always;
         }
     }
 }
