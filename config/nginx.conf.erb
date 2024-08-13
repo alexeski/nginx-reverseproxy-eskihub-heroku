@@ -43,7 +43,7 @@ http {
             if ($request_method = "OPTIONS") {
                 add_header 'Access-Control-Allow-Origin' $allowed_origin;  # Use the allowed origin variable
                 add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';  # Adjust methods as necessary
-                add_header 'Access-Control-Allow-Headers' 'Authorization, Cache-Control';  # Adjust headers as necessary
+                add_header 'Access-Control-Allow-Headers' 'Authorization, Cache-Control, Content-Type, X-Requested-With, Accept, X-Tableau-Auth';
                 add_header 'Access-Control-Max-Age' 7200;
                 add_header 'Access-Control-Allow-Credentials' 'true';  # Allow credentials
                 add_header 'Content-Type' 'text/plain; charset=utf-8';
@@ -72,7 +72,7 @@ http {
             if ($request_method = "OPTIONS") {
                 add_header 'Access-Control-Allow-Origin' $allowed_origin;  # Use the allowed origin variable
                 add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';  # Adjust methods as necessary
-                add_header 'Access-Control-Allow-Headers' 'Authorization, Cache-Control';  # Adjust headers as necessary
+                add_header 'Access-Control-Allow-Headers' 'Authorization, Cache-Control, Content-Type, X-Requested-With, Accept, X-Tableau-Auth';
                 add_header 'Access-Control-Max-Age' 7200;
                 add_header 'Access-Control-Allow-Credentials' 'true';  # Allow credentials
                 add_header 'Content-Type' 'text/plain; charset=utf-8';
