@@ -26,6 +26,12 @@ http {
     # Must read the body in 5 seconds.
     client_body_timeout <%= ENV['NGINX_CLIENT_BODY_TIMEOUT'] || 5 %>;
 
+    # Define a map to allow subdomains of eskihub.com
+    map $http_origin $allowed_origin {
+        default "";
+        "~^https?://([a-z0-9-]+\.eskihub\.com)$" $http_origin;  # Allow any subdomain of eskihub.com
+    }
+
     server {
         listen <%= ENV["PORT"] %>;
         server_name 10ax.eskihub.com;
@@ -35,7 +41,7 @@ http {
         location / {
             # CORS headers for OPTIONS requests
             if ($request_method = "OPTIONS") {
-                add_header 'Access-Control-Allow-Origin' '*';  # Replace '*' with your allowed origin if needed
+                add_header 'Access-Control-Allow-Origin' $allowed_origin;  # Use the allowed origin variable
                 add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';  # Adjust methods as necessary
                 add_header 'Access-Control-Allow-Headers' 'Authorization, Cache-Control';  # Adjust headers as necessary
                 add_header 'Access-Control-Max-Age' 7200;
@@ -61,6 +67,17 @@ http {
         client_max_body_size <%= ENV['NGINX_CLIENT_MAX_BODY_SIZE'] || 1 %>M;
 
         location / {
+            # CORS headers for OPTIONS requests
+            if ($request_method = "OPTIONS") {
+                add_header 'Access-Control-Allow-Origin' $allowed_origin;  # Use the allowed origin variable
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';  # Adjust methods as necessary
+                add_header 'Access-Control-Allow-Headers' 'Authorization, Cache-Control';  # Adjust headers as necessary
+                add_header 'Access-Control-Max-Age' 7200;
+                add_header 'Content-Type' 'text/plain; charset=utf-8';
+                add_header 'Content-Length' 0;
+                return 204;
+            }
+
             proxy_pass https://dub01.online.tableau.com/;
             proxy_ssl_name 'dub01.online.tableau.com';
             proxy_set_header x-forwarded-host $host;
